@@ -10,6 +10,8 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 
+import java.util.List;
+
 
 public class DBService {
 
@@ -61,12 +63,39 @@ public class DBService {
         }
     }
 
+    public List<UsersDataSet> getAllDbUsers() throws  DBException {
+        try {
+            Session session = sessionFactory.openSession();
+            UsersDAO dao = new UsersDAO(session);
+            List<UsersDataSet> listDataSet = dao.getAll();
+            session.close();
+            return listDataSet;
+        } catch (HibernateException e) {
+            throw new DBException(e);
+        }
+    }
+
+
     public long addDbUser(String name, String password) throws DBException {
         try {
             Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
             UsersDAO dao = new UsersDAO(session);
             long id = dao.insertUser(name, password);
+            transaction.commit();
+            session.close();
+            return id;
+        } catch (HibernateException e) {
+            throw new DBException(e);
+        }
+    }
+
+    public long addDbUser(String name, String password, String sessionId) throws DBException {
+        try {
+            Session session = sessionFactory.openSession();
+            Transaction transaction = session.beginTransaction();
+            UsersDAO dao = new UsersDAO(session);
+            long id = dao.insertUser(name, password, sessionId);
             transaction.commit();
             session.close();
             return id;

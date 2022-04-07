@@ -42,6 +42,7 @@ public class SignUpServlet extends HttpServlet {
 
         String login = request.getParameter("login");
         String password = request.getParameter("password");
+        String sessionId = request.getSession().getId();
 
         if (login == null || login.equals("") || password.equals("")) {
             response.setContentType("text/html;charset=utf-8");
@@ -50,10 +51,11 @@ public class SignUpServlet extends HttpServlet {
         }
 
         try {
-            dbService.addDbUser(login, password);
+            dbService.addDbUser(login, password, sessionId);
         } catch (DBException e) {
             e.printStackTrace();
         }
+
 
         response.setStatus(HttpServletResponse.SC_OK);
         response.setContentType("text/html;charset=utf-8");
@@ -73,5 +75,12 @@ public class SignUpServlet extends HttpServlet {
     public void doDelete(HttpServletRequest request,
                          HttpServletResponse response) throws ServletException, IOException {
         //todo
+        String login = request.getParameter("login");
+
+        try {
+            dbService.deleteDbUser(login);
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
     }
 }

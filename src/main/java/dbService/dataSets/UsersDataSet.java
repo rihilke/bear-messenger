@@ -21,7 +21,6 @@ public class UsersDataSet implements Serializable {
     @Column (name = "isAuthorized")
     private boolean isAuthorized;
 
-
     @Column(name="sessionId")
     private String sessionId;
 
@@ -45,6 +44,14 @@ public class UsersDataSet implements Serializable {
         this.setName(name);
         this.setPassword(password);
         this.setAuthorized(false);
+    }
+
+    public UsersDataSet(String name, String password, String sessionId) {
+        this.setId(-1);
+        this.setName(name);
+        this.setPassword(password);
+        this.setAuthorized(false);
+        this.setSessionId(sessionId);
     }
 
     @SuppressWarnings("UnusedDeclaration")

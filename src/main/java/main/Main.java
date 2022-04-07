@@ -10,6 +10,7 @@ import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import servlets.SignInServlet;
 import servlets.SignUpServlet;
+import servlets.UsersListServlet;
 
 public class Main {
     public static void main (String[] args) throws Exception {
@@ -19,6 +20,7 @@ public class Main {
         ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
         context.addServlet(new ServletHolder(new SignUpServlet(accountService)), "/signup");
         context.addServlet(new ServletHolder(new SignInServlet(accountService)), "/signin");
+        context.addServlet(new ServletHolder(new UsersListServlet()), "/list");
         context.addServlet(new ServletHolder(new WebSocketChatServlet()), "/chat");
 
 

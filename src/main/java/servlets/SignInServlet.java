@@ -85,6 +85,7 @@ public class SignInServlet extends HttpServlet {
         }
 
         dataSet.setAuthorized(true);
+        dataSet.setSessionId(request.getSession().getId());
         response.getWriter().println("Authorized: " + login);
         response.setContentType("text/html;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_OK);
